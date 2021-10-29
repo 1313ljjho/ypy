@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style type="text/css">
+	body{
+		text-align: center;
+		margin-top: 50px;
+	}
+	</style>
     <title>历史介绍</title>
 </head>
 <body>
@@ -44,6 +50,9 @@
 		Btn.y=520;
 		Btn.alpha = 0;
 		app.stage.addChild(Btn);
+		Btn.interactive = true;
+		Btn.buttonMode = true;
+		Btn.on("click",disappear);
 		
 		var slider = new PIXI.Sprite.fromImage("res/slider.png");
 		slider.scale.x=0.25;
@@ -61,6 +70,11 @@
 			appear_msg();
 			appear_Btn();
 			appear_slider();
+			if(flag){
+				msg.alpha -= 0.04;
+				title.alpha -= 0.04;
+				slider.alpha -= 0.04;
+			}
 		}
 		
 		function appear_title(){
@@ -76,12 +90,9 @@
 			slider.alpha += 0.002;
 		}
 		
-	Btn.interaction = true;
-	Btn.on("click",disappear);
+	var flag = false;
 	function disappear(){
-		msg.visible = false;
-		title.visible = false;
-		slider.visilble = false;	
+			flag = true;
 	}
 
 
