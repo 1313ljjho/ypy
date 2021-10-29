@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>历史介绍</title>
+</head>
+<body>
+    <script src="js/pixi.min.js"></script>
+    <script>
+		var app = new PIXI.Application(1200,600);
+        document.body.appendChild(app.view);
+        
+        var bg = new PIXI.Sprite.fromImage("res/bg.png");
+		bg.scale.x=0.3;
+		bg.scale.y=0.3;
+		bg.y=-10;
+        app.stage.addChild(bg);
+		
+		var msg = new PIXI.Sprite.fromImage("res/msg1.png");
+		msg.scale.x=0.3;
+		msg.scale.y=0.3;
+		msg.anchor.set(0.5,0.5);
+		msg.x=550;
+		msg.y=300;
+		msg.alpha = 0;
+		app.stage.addChild(msg);
+		
+		var title = new PIXI.Sprite.fromImage("res/title.png");
+		title.scale.x=0.3;
+		title.scale.y=0.3;
+		title.anchor.set(0.5,0.5);
+		title.x=985;
+		title.y=300;
+		title.alpha = 0;
+		app.stage.addChild(title);
+		
+		var Btn = new PIXI.Sprite.fromImage("res/nextBtn.png");
+		Btn.scale.x=0.25;
+		Btn.scale.y=0.25;
+		Btn.anchor.set(0.5,0.5);
+		Btn.x=600;
+		Btn.y=520;
+		Btn.alpha = 0;
+		app.stage.addChild(Btn);
+		
+		var slider = new PIXI.Sprite.fromImage("res/slider.png");
+		slider.scale.x=0.25;
+		slider.scale.y=0.25;
+		slider.anchor.set(0.5,0.5);
+		slider.x=600;
+		slider.y=475;
+		slider.alpha = 0;
+		app.stage.addChild(slider);
+		
+		//渐显动画
+		app.ticker.add(animate);
+		function animate(){
+			appear_title();
+			appear_msg();
+			appear_Btn();
+			appear_slider();
+		}
+		
+		function appear_title(){
+			title.alpha += 0.01;
+		}
+		function appear_msg(){
+			msg.alpha += 0.01;
+		}
+		function appear_Btn(){
+			Btn.alpha += 0.002;
+		}
+		function appear_slider(){
+			slider.alpha += 0.002;
+		}
+		
+	Btn.interaction = true;
+	Btn.on("click",disappear);
+	function disappear(){
+		msg.visible = false;
+		title.visible = false;
+		slider.visilble = false;	
+	}
+
+
+    </script>
+	
+</body>
+</html>
