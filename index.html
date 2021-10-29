@@ -7,7 +7,8 @@
 	<style type="text/css">
 	body{
 		text-align: center;
-		margin-top: 50px;
+		margin-top: 90px;
+		margin-right: 100px;
 	}
 	</style>
     <title>历史介绍</title>
@@ -24,14 +25,27 @@
 		bg.y=-10;
         app.stage.addChild(bg);
 		
-		var msg = new PIXI.Sprite.fromImage("res/msg1.png");
+		var msg = new PIXI.Sprite.fromImage("res/msg.png");
 		msg.scale.x=0.3;
 		msg.scale.y=0.3;
 		msg.anchor.set(0.5,0.5);
-		msg.x=550;
+		msg.x=450;
 		msg.y=300;
 		msg.alpha = 0;
 		app.stage.addChild(msg);
+		msg.interactive = true;
+		msg.on("mousemove", moveMsg);
+		msg.on("click",change);
+		var flag3 = -1;
+		function change(){
+			flag3 *= -1;
+		}
+		
+		var div = new PIXI.Sprite.fromImage("res/bgdiv.png");
+		div.scale.x=0.3;
+		div.scale.y=0.3;
+		div.y=-10;
+		app.stage.addChild(div);
 		
 		var title = new PIXI.Sprite.fromImage("res/title.png");
 		title.scale.x=0.3;
@@ -54,45 +68,100 @@
 		Btn.buttonMode = true;
 		Btn.on("click",disappear);
 		
-		var slider = new PIXI.Sprite.fromImage("res/slider.png");
-		slider.scale.x=0.25;
-		slider.scale.y=0.25;
-		slider.anchor.set(0.5,0.5);
-		slider.x=600;
-		slider.y=475;
-		slider.alpha = 0;
-		app.stage.addChild(slider);
+//		var slider = new PIXI.Sprite.fromImage("res/slider.png");
+//		slider.scale.x=0.25;
+//		slider.scale.y=0.25;
+//		slider.anchor.set(0.5,0.5);
+//		slider.x=600;
+//		slider.y=475;
+//		slider.alpha = 0;
+//		app.stage.addChild(slider);
+		
+		var left = new PIXI.Sprite.fromImage("res/left.png");
+		left.scale.x=0.3;
+		left.scale.y=0.3;
+		left.y=-10;
+		app.stage.addChild(left);
+		
+		
+		function moveMsg(event){
+			var pos = event.data.getLocalPosition(app.stage);
+			if(flag3 == 1){
+				if(pos.x<=800 && pos.x >= 350)
+				msg.x = pos.x;
+			}else{
+				msg.x=450;
+				msg.y=300;
+			}
+			
+		}
+		
 		
 		//渐显动画
+		var flag1 = false;
 		app.ticker.add(animate);
 		function animate(){
+			moveleft();
+			if(flag1){
 			appear_title();
 			appear_msg();
 			appear_Btn();
-			appear_slider();
+			//appear_slider();
+			}
+			
+			
 			if(flag){
 				msg.alpha -= 0.04;
 				title.alpha -= 0.04;
-				slider.alpha -= 0.04;
+				//slider.alpha -= 0.04;
 			}
 		}
 		
 		function appear_title(){
-			title.alpha += 0.01;
+			if(title.alpha>=1){
+				title.alpha=1;
+			}else{
+				title.alpha += 0.02;
+			}
 		}
 		function appear_msg(){
-			msg.alpha += 0.01;
+			
+			if(msg.alpha >=1){
+				msg.alpha = 1;
+			}else{
+				msg.alpha += 0.02;
+			}
 		}
 		function appear_Btn(){
-			Btn.alpha += 0.002;
+			if(Btn.alpha>=1){
+				Btn.alpha =1;
+			}else{
+				Btn.alpha += 0.02;
+			}
+			
 		}
-		function appear_slider(){
-			slider.alpha += 0.002;
-		}
+//		function appear_slider(){
+//			if(slider.alpha>=1){
+//				slider.alpha=1;
+//			}else{
+//				slider.alpha += 0.02;
+//			}
+//			
+//		}
 		
 	var flag = false;
 	function disappear(){
 			flag = true;
+			flag1 =false;
+	}
+	function moveleft(){
+		
+		if(left.x <=-1000){
+			left.x = -1000;
+			flag1 = true;
+		}else{
+			left.x -= 5;
+		}
 	}
 
 
